@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 
 import { IndexRoutingModule } from './index-routing.module';
 import { IndexComponent } from './index.component';
@@ -9,6 +9,7 @@ import { IndexComponent } from './index.component';
   imports: [
     CommonModule,
     IndexRoutingModule
-  ]
+  ],
+  providers: [{provide: APP_BASE_HREF, useValue: '/'}]
 })
 export class IndexModule { }
