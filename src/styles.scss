@@ -1,4 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+
+.bg-dark {
+  background-color: #191919 !important;
+}
+
+.bg-grad1 {
+  background: linear-gradient(90deg, #004580, #0e0e0e);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
