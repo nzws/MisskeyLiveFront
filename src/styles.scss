@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+
+.bg-dark {
+  background-color: #191919 !important;
+}
+
+.bg-grad1 {
+  background: linear-gradient(90deg, #004580, #0e0e0e);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(138, 138, 138, 0.1);
+}

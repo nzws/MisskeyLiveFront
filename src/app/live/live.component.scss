@@ -1,0 +1,21 @@
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.live {
+  position: absolute;
+  width: 100%;
+  height: calc(100vh - 64px);
+}
+
+.live-app {
+  height: 100%;
+  overflow-y: scroll;
+}
