@@ -4,10 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './index/index.module#IndexModule'
+    loadChildren: () => import('./index/index.module').then(m => m.IndexModule)
   }, {
     path: ':id',
-    loadChildren: './live/live.module#LiveModule'
+    loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   }
 ];
 
