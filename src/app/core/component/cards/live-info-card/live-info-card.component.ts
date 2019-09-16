@@ -6,9 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./live-info-card.component.scss']
 })
 export class LiveInfoCardComponent implements OnInit {
-  @Input('title') title: string;
-  @Input('url') url: string;
-  @Input('thumbnail') thumbnail: string;
+  @Input() title: string;
+  @Input() url: string;
+  @Input() thumbnail: string;
 
   constructor() {}
 
