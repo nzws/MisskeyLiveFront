@@ -1,6 +1,8 @@
-<div class="card">
-  <img src="https://dummyimage.com/640x360" class="card-img-top" alt="image">
-  <div class="card-body">
-    <h5 class="card-title">配信タイトル配信タイトル配信タイトル</h5>
+<a [routerLink]="url">
+  <div class="card">
+    <img [src]="thumbnail" class="card-img-top" alt="image">
+    <div class="card-body">
+      <h5 class="card-title">{{title}}</h5>
+    </div>
   </div>
-</div>
+</a>
