@@ -7,9 +7,6 @@ import { LiveInfoCardComponent } from '../core/component/cards/live-info-card/li
 
 @NgModule({
   declarations: [IndexComponent, LiveInfoCardComponent],
-  imports: [
-    CommonModule,
-    IndexRoutingModule
-  ]
+  imports: [CommonModule, IndexRoutingModule]
 })
-export class IndexModule { }
+export class IndexModule {}
