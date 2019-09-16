@@ -6,9 +6,6 @@ import { IndexComponent } from './index.component';
 
 @NgModule({
   declarations: [IndexComponent],
-  imports: [
-    CommonModule,
-    IndexRoutingModule
-  ]
+  imports: [CommonModule, IndexRoutingModule]
 })
-export class IndexModule { }
+export class IndexModule {}
