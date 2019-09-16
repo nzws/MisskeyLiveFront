@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-live-info-card',
@@ -10,9 +10,7 @@ export class LiveInfoCardComponent implements OnInit {
   @Input('url') url: string;
   @Input('thumbnail') thumbnail: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

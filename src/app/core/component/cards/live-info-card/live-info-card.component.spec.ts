@@ -8,9 +8,8 @@ describe('LiveInfoCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LiveInfoCardComponent ]
-    })
-    .compileComponents();
+      declarations: [LiveInfoCardComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
