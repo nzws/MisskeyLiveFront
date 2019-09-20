@@ -9,8 +9,8 @@ export class SessionService {
   private token: string;
 
   constructor(private cookieService: CookieService) {
-    this.login = this.cookieService.check('i');
-    this.token = this.login ? this.cookieService.get('i') : null;
+    this.login = this.cookieService.check('live-token');
+    this.token = this.login ? this.cookieService.get('live-token') : null;
   }
 
   isLogin() {
