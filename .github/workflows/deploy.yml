@@ -24,4 +24,4 @@ jobs:
       - name: Install now.sh
         run: sudo npm install -g --unsafe-perm now
       - name: Deploy Now
-        run: cd ./dist && now --prod -n misskeylive -t ${{secrets.ZEIT_TOKEN}}
+        run: cd ./dist/MisskeyLiveFront && now --prod -n misskeylive -t ${{secrets.ZEIT_TOKEN}}
