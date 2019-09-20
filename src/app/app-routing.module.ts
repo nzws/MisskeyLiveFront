@@ -13,6 +13,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./core/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
     path: ':id',
     loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   }

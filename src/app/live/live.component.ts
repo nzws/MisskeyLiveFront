@@ -3,6 +3,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {SessionService} from '../core/service/session.service';
 
 export interface Data {
   status: string;
@@ -23,17 +24,25 @@ export class LiveComponent implements OnInit {
   video: SafeResourceUrl;
   userId = '404';
   userData: Data;
+  isLogin = false;
+  i: string;
   ws: WebSocket;
 
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
+    private sessionService: SessionService
   ) {
   }
 
   ngOnInit() {
+    this.isLogin = this.sessionService.isLogin();
+    this.i = this.sessionService.getToken();
     this.route.params.subscribe(params => {
+      if (!params.id) {
+        return;
+      }
       this.userId = params.id;
       this.playerInit();
       this.wsInit();
