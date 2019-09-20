@@ -20,7 +20,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Build
-        run: npm run build --prod
+        run: npm run build
       - name: Install now.sh
         run: sudo npm install -g --unsafe-perm now
       - name: Deploy Now
