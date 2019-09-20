@@ -4,10 +4,16 @@
       <iframe [src]="video"></iframe>
     </div>
     <div class="container-fluid mt-1">
-      <h4>{{userData?.title}}</h4>
-      <p>{{userData?.description}}</p>
-      <p>{{userData?.tag}}</p>
+      <h4>{{ userData?.title }}</h4>
+      <p>{{ userData?.description }}</p>
+      <p>{{ userData?.tag }}</p>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 live-app"></div>
+  <div class="col-sm-12 col-md-3 comments">
+    <ul #comments class="list-unstyled m-0"></ul>
+    <form *ngIf="isLogin" (ngSubmit)="sendComment()" class="mr-0 mr-md-auto">
+      <input type="text" class="send" placeholder="Enterキーでコメントを送信" [(ngModel)]="comment" name="comment">
+    </form>
+    <input *ngIf="!isLogin" type="text" class="send" placeholder="ログインしていていないためコメントできません" disabled>
+  </div>
 </div>

@@ -3,7 +3,7 @@
   margin-left: 0;
 
   > .col,
-  > [class*="col-"] {
+  > [class*='col-'] {
     padding-right: 0;
     padding-left: 0;
   }
@@ -18,4 +18,19 @@
 .live-app {
   height: 100%;
   overflow-y: scroll;
+}
+
+.comments {
+  height: 100%;
+  overflow-y: hidden;
+  .list-unstyled {
+    height: calc(100% - 48px);
+    overflow-y: auto;
+  }
+  .send {
+    padding: 10px;
+    border: none;
+    width: 100%;
+    height: 48px;
+  }
 }

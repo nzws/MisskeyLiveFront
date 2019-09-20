@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IndexComponent } from './index.component';
+import { LiveInfoCardComponent } from './live-info-card.component';
 import {RouterTestingModule} from '@angular/router/testing';
 
-describe('IndexComponent', () => {
-  let component: IndexComponent;
-  let fixture: ComponentFixture<IndexComponent>;
+describe('LiveInfoCardComponent', () => {
+  let component: LiveInfoCardComponent;
+  let fixture: ComponentFixture<LiveInfoCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
-      declarations: [IndexComponent]
+      declarations: [LiveInfoCardComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndexComponent);
+    fixture = TestBed.createComponent(LiveInfoCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
