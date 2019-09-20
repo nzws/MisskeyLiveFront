@@ -21,8 +21,6 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build --prod
-      - name: Test
-        run: npm test
       - name: Install now.sh
         run: sudo npm install -g --unsafe-perm now
       - name: Deploy Now
