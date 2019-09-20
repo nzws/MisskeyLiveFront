@@ -4,6 +4,7 @@ import { LiveComponent } from './live.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
+import {FormsModule} from '@angular/forms';
 
 describe('LiveComponent', () => {
   let component: LiveComponent;
@@ -12,7 +13,7 @@ describe('LiveComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LiveComponent],
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientModule, FormsModule],
       providers: [CookieService]
     }).compileComponents();
   }));

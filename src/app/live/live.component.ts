@@ -27,6 +27,7 @@ export class LiveComponent implements OnInit {
   isLogin = false;
   i: string;
   ws: WebSocket;
+  comment: string;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -47,6 +48,13 @@ export class LiveComponent implements OnInit {
       this.playerInit();
       this.wsInit();
     });
+    if (!environment.production) {
+      setTimeout(() => {
+        for (let i = 0; i < 50; i++) {
+          this.writeComment(null, 'testさん', i);
+        }
+      }, 3000);
+    }
   }
 
   playerInit() {
@@ -92,7 +100,7 @@ export class LiveComponent implements OnInit {
       if (!tempChat.text) {
         return;
       }
-      const text = tempChat.text.replace(`#ML${this.userId}`, '');
+      const text = tempChat.text.replace(`#ML${this.userId}`, '').replace('#MisskeyLive', '');
       this.writeComment(tempChat.user.avatarUrl, tempChat.user.name, text);
     };
     this.ws.onerror = () => {
@@ -120,6 +128,7 @@ export class LiveComponent implements OnInit {
     li.appendChild(bodyEl);
     this.comments.nativeElement.appendChild(li);
     this.cleanComment();
+    this.comments.nativeElement.scrollTop = this.comments.nativeElement.scrollHeight;
   }
   
   cleanComment() {
@@ -128,5 +137,16 @@ export class LiveComponent implements OnInit {
       return;
     }
     node[0].remove();
+  }
+
+  sendComment() {
+    const data = {
+      i: this.i,
+      text: this.comment + ' #MisskeyLive #ML' + this.userId,
+      visibility: 'public',
+      localOnly: false
+    };
+    this.httpClient.post('https://misskey.io/api/notes/create', data).subscribe();
+    this.comment = '';
   }
 }

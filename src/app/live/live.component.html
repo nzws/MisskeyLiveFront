@@ -9,7 +9,11 @@
       <p>{{ userData?.tag }}</p>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 live-app comments">
-    <ul #comments class="list-unstyled"></ul>
+  <div class="col-sm-12 col-md-3 comments">
+    <ul #comments class="list-unstyled m-0"></ul>
+    <form *ngIf="isLogin" (ngSubmit)="sendComment()" class="mr-0 mr-md-auto">
+      <input type="text" class="send" placeholder="Enterキーでコメントを送信" [(ngModel)]="comment" name="comment">
+    </form>
+    <input *ngIf="!isLogin" type="text" class="send" placeholder="ログインしていていないためコメントできません" disabled>
   </div>
 </div>
