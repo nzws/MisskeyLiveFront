@@ -27,6 +27,7 @@ export class LiveComponent implements OnInit {
   isLogin = false;
   i: string;
   ws: WebSocket;
+  bouyomi = true;
   comment: string;
 
   constructor(
@@ -51,7 +52,9 @@ export class LiveComponent implements OnInit {
     if (!environment.production) {
       setTimeout(() => {
         for (let i = 0; i < 50; i++) {
-          this.writeComment(null, 'testさん', i);
+          setTimeout(() => {
+            this.writeComment(null, 'testさん', i);
+          }, i * 100);
         }
       }, 3000);
     }
@@ -77,6 +80,8 @@ export class LiveComponent implements OnInit {
 
   wsInit() {
     this.ws = new WebSocket('wss://misskey.io/streaming');
+    this.bouyomiSpeech('MisskeyLiveと連携しました');
+
     this.ws.onopen = () => {
       this.ws.send(JSON.stringify({
         type: 'connect',
@@ -129,6 +134,10 @@ export class LiveComponent implements OnInit {
     this.comments.nativeElement.appendChild(li);
     this.cleanComment();
     this.comments.nativeElement.scrollTop = this.comments.nativeElement.scrollHeight;
+    if (!this.bouyomi) {
+      return
+    }
+    this.bouyomiSpeech(comment + ' ' + name);
   }
 
   cleanComment() {
@@ -148,5 +157,18 @@ export class LiveComponent implements OnInit {
     };
     this.httpClient.post('https://misskey.io/api/notes/create', data).subscribe();
     this.comment = '';
+  }
+
+  bouyomiSpeech(text: string) {
+    if (!this.bouyomi) {
+      return;
+    }
+    const socket = new WebSocket('ws://localhost:50002/');
+    socket.onerror = () => {
+      this.bouyomi = false;
+    };
+    socket.onopen = () => {
+      socket.send('-1<bouyomi>-1<bouyomi>-1<bouyomi>0<bouyomi>' + text);
+    }
   }
 }
