@@ -91,7 +91,7 @@ export class LiveComponent implements OnInit {
     };
 
     this.ws.onclose = () => {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.wsInit();
       }, 10000)
     };
@@ -130,7 +130,7 @@ export class LiveComponent implements OnInit {
     this.cleanComment();
     this.comments.nativeElement.scrollTop = this.comments.nativeElement.scrollHeight;
   }
-  
+
   cleanComment() {
     const node = this.comments.nativeElement.children;
     if (node.length < 100) {
