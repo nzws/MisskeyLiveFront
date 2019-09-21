@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionService} from './core/service/session.service';
 import {environment} from '../environments/environment';
-import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +10,10 @@ import {CookieService} from 'ngx-cookie-service';
 export class AppComponent {
   apiUrl = environment.api;
   staticSessionService = SessionService;
+  isCollapsed = true;
 
   constructor(
     private sessionService: SessionService
-  ) {}
+  ) {
+  }
 }

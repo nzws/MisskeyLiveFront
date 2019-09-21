@@ -1,6 +1,6 @@
 import {async, TestBed} from '@angular/core/testing';
 
-import { SessionService } from './session.service';
+import {SessionService} from './session.service';
 import {CookieService} from 'ngx-cookie-service';
 
 describe('SessionService', () => {

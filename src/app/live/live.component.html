@@ -11,10 +11,10 @@
   </div>
   <div class="col-sm-12 col-md-3 comments">
     <ul #comments class="list-unstyled m-0"></ul>
-    <form *ngIf="isLogin && !isCommentWait" (ngSubmit)="sendComment()" class="mr-0 mr-md-auto">
-      <input type="text" class="send" placeholder="Enterキーでコメントを送信" [(ngModel)]="comment" name="comment">
+    <form (ngSubmit)="sendComment()" *ngIf="isLogin && !isCommentWait" class="mr-0 mr-md-auto">
+      <input [(ngModel)]="comment" class="send" name="comment" placeholder="Enterキーでコメントを送信" type="text">
     </form>
-    <input *ngIf="!isLogin" type="text" class="send" placeholder="ログインしていていないためコメントできません" disabled>
-    <input *ngIf="isCommentWait" type="text" class="send" placeholder="コメントを送信しました" disabled>
+    <input *ngIf="!isLogin" class="send" disabled placeholder="ログインしていていないためコメントできません" type="text">
+    <input *ngIf="isCommentWait" class="send" disabled placeholder="コメントを送信しました" type="text">
   </div>
 </div>
