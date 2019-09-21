@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.get(`${environment.api}/auth/data`, {withCredentials: true})
+    this.httpClient.get(`${environment.api}/api/auth/data`, {withCredentials: true})
       .subscribe((data: any) => {
         this.cookieService.set('live-token', data.i, 60, '/');
         this.router.navigate(['/']);
