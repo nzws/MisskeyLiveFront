@@ -36,3 +36,9 @@
     height: 48px;
   }
 }
+
+@media (max-width: 767px) {
+  .live-app, .comments {
+    max-height: 50%;
+  }
+}
