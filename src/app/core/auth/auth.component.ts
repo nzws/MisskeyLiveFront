@@ -17,7 +17,8 @@ export class AuthComponent implements OnInit {
     private cookieService: CookieService,
     private httpClient: HttpClient,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.httpClient.get(`${environment.api}/api/auth/data`, {withCredentials: true})

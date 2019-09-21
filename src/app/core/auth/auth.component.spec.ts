@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AuthComponent } from './auth.component';
+import {AuthComponent} from './auth.component';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -16,9 +16,9 @@ describe('AuthComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [CookieService],
-      declarations: [ AuthComponent ]
+      declarations: [AuthComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionService} from './core/service/session.service';
 import {environment} from '../environments/environment';
-import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -15,5 +14,6 @@ export class AppComponent {
 
   constructor(
     private sessionService: SessionService
-  ) {}
+  ) {
+  }
 }
