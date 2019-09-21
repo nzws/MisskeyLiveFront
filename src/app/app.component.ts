@@ -11,6 +11,7 @@ import {CookieService} from 'ngx-cookie-service';
 export class AppComponent {
   apiUrl = environment.api;
   staticSessionService = SessionService;
+  isCollapsed = true;
 
   constructor(
     private sessionService: SessionService
