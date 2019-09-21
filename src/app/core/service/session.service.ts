@@ -6,14 +6,20 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class SessionService {
 
+  static login = false;
+  static token: string = null;
+
   constructor(private cookieService: CookieService) {
+    this.refresh();
   }
 
-  isLogin() {
-    return this.cookieService.check('live-token');
+  refresh() {
+    SessionService.login = this.cookieService.check('live-token');
+    SessionService.token = SessionService.login ? this.cookieService.get('live-token') : null;
   }
 
-  getToken() {
-    return this.isLogin() ? this.cookieService.get('live-token') : null;
+  logout() {
+    this.cookieService.delete('live-token');
+    this.refresh();
   }
 }
