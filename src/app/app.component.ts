@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from './core/service/session.service';
 import {environment} from '../environments/environment';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +10,20 @@ import {environment} from '../environments/environment';
 })
 export class AppComponent implements OnInit {
   isLogin = false;
-  i: string;
   apiUrl = environment.api;
 
-  constructor(private sessionService: SessionService) {
+  constructor(
+    private sessionService: SessionService,
+    private cookieService: CookieService
+    ) {
   }
 
   ngOnInit() {
     this.isLogin = this.sessionService.isLogin();
-    this.i = this.sessionService.getToken();
+  }
+
+  logout() {
+    this.cookieService.delete('live-token');
+    this.isLogin = false;
   }
 }
