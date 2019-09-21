@@ -8,22 +8,11 @@ import {CookieService} from 'ngx-cookie-service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  isLogin = false;
+export class AppComponent {
   apiUrl = environment.api;
+  staticSessionService = SessionService;
 
   constructor(
-    private sessionService: SessionService,
-    private cookieService: CookieService
-    ) {
-  }
-
-  ngOnInit() {
-    this.isLogin = this.sessionService.isLogin();
-  }
-
-  logout() {
-    this.cookieService.delete('live-token');
-    this.isLogin = false;
-  }
+    private sessionService: SessionService
+  ) {}
 }

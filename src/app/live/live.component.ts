@@ -34,14 +34,13 @@ export class LiveComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private httpClient: HttpClient,
-    private sessionService: SessionService
+    private httpClient: HttpClient
   ) {
   }
 
   ngOnInit() {
-    this.isLogin = this.sessionService.isLogin();
-    this.i = this.sessionService.getToken();
+    this.isLogin = SessionService.login;
+    this.i = SessionService.token;
     this.route.params.subscribe(params => {
       if (!params.id) {
         return;
