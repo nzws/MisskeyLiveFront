@@ -19,7 +19,7 @@ export interface Data {
   styleUrls: ['./live.component.scss']
 })
 export class LiveComponent implements OnInit {
-  @ViewChild('comments', {static: false}) comments : ElementRef;
+  @ViewChild('comments', {static: false}) comments: ElementRef;
 
   video: SafeResourceUrl;
   userId = '404';
@@ -29,6 +29,7 @@ export class LiveComponent implements OnInit {
   ws: WebSocket;
   bouyomi = true;
   comment: string;
+  isCommentWait = false;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -98,7 +99,7 @@ export class LiveComponent implements OnInit {
     this.ws.onclose = () => {
       setTimeout(() => {
         this.wsInit();
-      }, 10000)
+      }, 10000);
     };
     this.ws.onmessage = (msg) => {
       const tempChat = JSON.parse(msg.data).body.body;
@@ -113,12 +114,12 @@ export class LiveComponent implements OnInit {
     };
   }
 
-  writeComment(avator, name, comment) {
+  writeComment(avatar, name, comment) {
     const li = document.createElement('li');
     li.classList.add('media', 'comment', 'my-1');
     const img = document.createElement('img');
     img.classList.add('mr-3', 'rounded-circle');
-    img.src = avator;
+    img.src = avatar;
     img.width = 48;
     li.appendChild(img);
     const bodyEl = document.createElement('div');
@@ -135,7 +136,7 @@ export class LiveComponent implements OnInit {
     this.cleanComment();
     this.comments.nativeElement.scrollTop = this.comments.nativeElement.scrollHeight;
     if (!this.bouyomi) {
-      return
+      return;
     }
     this.bouyomiSpeech(comment + ' ' + name);
   }
@@ -149,6 +150,14 @@ export class LiveComponent implements OnInit {
   }
 
   sendComment() {
+    this.comment = this.comment.trim();
+    if (!this.comment) {
+      return;
+    }
+    this.isCommentWait = true;
+    setTimeout(() => {
+      this.isCommentWait = false;
+    }, 3000);
     const data = {
       i: this.i,
       text: this.comment + ' #MisskeyLive #ML' + this.userId,
@@ -169,6 +178,6 @@ export class LiveComponent implements OnInit {
     };
     socket.onopen = () => {
       socket.send('-1<bouyomi>-1<bouyomi>-1<bouyomi>0<bouyomi>' + text);
-    }
+    };
   }
 }
