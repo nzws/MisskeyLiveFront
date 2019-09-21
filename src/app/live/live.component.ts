@@ -149,6 +149,10 @@ export class LiveComponent implements OnInit {
   }
 
   sendComment() {
+    this.comment = this.comment.trim();
+    if (!this.comment) {
+      return;
+    }
     const data = {
       i: this.i,
       text: this.comment + ' #MisskeyLive #ML' + this.userId,
