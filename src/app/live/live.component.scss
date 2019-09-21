@@ -23,10 +23,12 @@
 .comments {
   height: 100%;
   overflow-y: hidden;
+
   .list-unstyled {
     height: calc(100% - 48px);
     overflow-y: auto;
   }
+
   .send {
     padding: 10px;
     border: none;

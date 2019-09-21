@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'https://api-live.arkjp.net'
+  api: 'https://live-api.arkjp.net'
 };

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {CookieService} from 'ngx-cookie-service';
 import {SessionService} from './core/service/session.service';
 import {environment} from '../environments/environment';
 
