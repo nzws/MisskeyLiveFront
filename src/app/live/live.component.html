@@ -12,7 +12,7 @@
   <div class="col-sm-12 col-md-3 comments">
     <ul #comments class="list-unstyled m-0"></ul>
     <form (ngSubmit)="sendComment()" *ngIf="isLogin && !isCommentWait" class="mr-0 mr-md-auto">
-      <input [(ngModel)]="comment" class="send" name="comment" placeholder="Enterキーでコメントを送信" type="text">
+      <input [(ngModel)]="comment" class="send" name="comment" placeholder="Enterキーでコメントを送信" type="text" autofocus>
     </form>
     <input *ngIf="!isLogin" class="send" disabled placeholder="ログインしていていないためコメントできません" type="text">
     <input *ngIf="isCommentWait" class="send" disabled placeholder="コメントを送信しました" type="text">
