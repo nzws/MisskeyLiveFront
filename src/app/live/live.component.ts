@@ -105,8 +105,13 @@ export class LiveComponent implements OnInit {
       if (!tempChat.text) {
         return;
       }
-      const text = tempChat.text.replace(`#ML${this.userId}`, '').replace('#MisskeyLive', '');
-      this.writeComment(tempChat.user.avatarUrl, tempChat.user.name, text);
+      const text = tempChat.text
+        .replace(`#ML${this.userId}`, '')
+        .replace('#MisskeyLive', '')
+        .replace(`https://live.misskey.io/${this.userId}`, '');
+      const userName = (tempChat.user.name === null) ? tempChat.user.username : tempChat.user.name;
+      const userNameView = (tempChat.user.host === null) ? userName : `${userName}@${tempChat.user.host}`;
+      this.writeComment(tempChat.user.avatarUrl, userNameView, text);
     };
     this.ws.onerror = () => {
       this.ws.close();
@@ -159,7 +164,7 @@ export class LiveComponent implements OnInit {
     }, 3000);
     const data = {
       i: this.i,
-      text: this.comment + ' #MisskeyLive #ML' + this.userId,
+      text: `${this.comment} #MisskeyLive #ML${this.userId} \n https://live.misskey.io/${this.userId}`,
       visibility: 'public',
       localOnly: false
     };
