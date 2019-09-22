@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {SessionService} from '../core/service/session.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { SessionService } from '../core/service/session.service';
 
 export interface Data {
   status: string;
@@ -13,13 +13,24 @@ export interface Data {
   message?: string;
 }
 
+interface MisskeyNote {
+  id: String;
+  text: String | null;
+  user: {
+    name: String | null;
+    username: String;
+    host: String | null;
+    avatarUrl: String | null;
+  };
+}
+
 @Component({
   selector: 'app-live',
   templateUrl: './live.component.html',
   styleUrls: ['./live.component.scss']
 })
 export class LiveComponent implements OnInit {
-  @ViewChild('comments', {static: false}) comments: ElementRef;
+  @ViewChild('comments', { static: false }) comments: ElementRef;
 
   video: SafeResourceUrl;
   userId = '404';
@@ -31,12 +42,7 @@ export class LiveComponent implements OnInit {
   comment: string;
   isCommentWait = false;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private route: ActivatedRoute,
-    private httpClient: HttpClient
-  ) {
-  }
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {}
 
   ngOnInit() {
     this.isLogin = SessionService.login;
@@ -47,17 +53,9 @@ export class LiveComponent implements OnInit {
       }
       this.userId = params.id;
       this.playerInit();
+      this.fetchOldComments();
       this.wsInit();
     });
-    if (!environment.production) {
-      setTimeout(() => {
-        for (let i = 0; i < 50; i++) {
-          setTimeout(() => {
-            this.writeComment(null, 'testさん', i);
-          }, i * 100);
-        }
-      }, 3000);
-    }
   }
 
   playerInit() {
@@ -83,16 +81,18 @@ export class LiveComponent implements OnInit {
     this.bouyomiSpeech('MisskeyLiveと連携しました');
 
     this.ws.onopen = () => {
-      this.ws.send(JSON.stringify({
-        type: 'connect',
-        body: {
-          channel: 'hashtag',
-          id: this.userId,
-          params: {
-            q: [[`ML${this.userId}`]]
+      this.ws.send(
+        JSON.stringify({
+          type: 'connect',
+          body: {
+            channel: 'hashtag',
+            id: this.userId,
+            params: {
+              q: [[`ML${this.userId}`]]
+            }
           }
-        }
-      }));
+        })
+      );
     };
 
     this.ws.onclose = () => {
@@ -100,22 +100,37 @@ export class LiveComponent implements OnInit {
         this.wsInit();
       }, 10000);
     };
-    this.ws.onmessage = (msg) => {
-      const tempChat = JSON.parse(msg.data).body.body;
-      if (!tempChat.text) {
-        return;
-      }
-      const text = tempChat.text
-        .replace(`#ML${this.userId}`, '')
-        .replace('#MisskeyLive', '')
-        .replace(`https://live.misskey.io/${this.userId}`, '');
-      const userName = (tempChat.user.name === null) ? tempChat.user.username : tempChat.user.name;
-      const userNameView = (tempChat.user.host === null) ? userName : `${userName}@${tempChat.user.host}`;
-      this.writeComment(tempChat.user.avatarUrl, userNameView, text);
+    this.ws.onmessage = msg => {
+      this.addComment(JSON.parse(msg.data).body.body as MisskeyNote);
     };
     this.ws.onerror = () => {
       this.ws.close();
     };
+  }
+
+  fetchOldComments() {
+    this.httpClient
+      .post<MisskeyNote[]>('https://misskey.io/api/notes/search-by-tag', {
+        tag: `ML${this.userId}`
+      })
+      .subscribe(notes => {
+        for (const note of notes.reverse()) {
+          this.addComment(note);
+        }
+      });
+  }
+
+  addComment(note: MisskeyNote) {
+    if (!note.text) {
+      return;
+    }
+    const text = note.text
+      .replace(`#ML${this.userId}`, '')
+      .replace('#MisskeyLive', '')
+      .replace(`https://live.misskey.io/${this.userId}`, '');
+    const userName = note.user.name === null ? note.user.username : note.user.name;
+    const userNameView = note.user.host === null ? userName : `${userName}@${note.user.host}`;
+    this.writeComment(note.user.avatarUrl, userNameView, text);
   }
 
   writeComment(avatar, name, comment) {
