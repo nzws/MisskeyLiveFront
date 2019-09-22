@@ -109,7 +109,9 @@ export class LiveComponent implements OnInit {
         .replace(`#ML${this.userId}`, '')
         .replace('#MisskeyLive', '')
         .replace(`https://live.misskey.io/${this.userId}`, '');
-      this.writeComment(tempChat.user.avatarUrl, tempChat.user.name, text);
+      const userName = (tempChat.user.name === null) ? tempChat.user.username : tempChat.user.name;
+      const userNameView = (tempChat.user.host === null) ? userName : `${userName}@${tempChat.user.host}`;
+      this.writeComment(tempChat.user.avatarUrl, userNameView, text);
     };
     this.ws.onerror = () => {
       this.ws.close();
