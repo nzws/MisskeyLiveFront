@@ -14,13 +14,13 @@ export interface Data {
 }
 
 interface MisskeyNote {
-  id: String;
-  text: String | null;
+  id: string;
+  text: string | null;
   user: {
-    name: String | null;
-    username: String;
-    host: String | null;
-    avatarUrl: String | null;
+    name: string | null;
+    username: string;
+    host: string | null;
+    avatarUrl: string | null;
   };
 }
 
