@@ -100,7 +100,7 @@ export class LiveComponent implements OnInit {
       }, 10000);
     };
     this.ws.onmessage = msg => {
-      this.addComment(JSON.parse(msg.data).body.body as MisskeyNote);
+      this.addComment(JSON.parse(msg.data).body.body as MisskeyNote, true);
     };
     this.ws.onerror = () => {
       this.ws.close();
@@ -114,12 +114,12 @@ export class LiveComponent implements OnInit {
       })
       .subscribe(notes => {
         for (const note of notes.reverse()) {
-          this.addComment(note);
+          this.addComment(note, false);
         }
       });
   }
 
-  addComment(note: MisskeyNote) {
+  addComment(note: MisskeyNote, bouyomi: boolean) {
     if (!note.text) {
       return;
     }
@@ -129,10 +129,10 @@ export class LiveComponent implements OnInit {
       .replace(`https://live.misskey.io/${this.userId}`, '');
     const userName = note.user.name === null ? note.user.username : note.user.name;
     const userNameView = note.user.host === null ? userName : `${userName}@${note.user.host}`;
-    this.writeComment(note.user.avatarUrl, userNameView, text);
+    this.writeComment(note.user.avatarUrl, userNameView, text, bouyomi);
   }
 
-  writeComment(avatar, name, comment) {
+  writeComment(avatar, name, comment, bouyomi: boolean) {
     const li = document.createElement('li');
     li.classList.add('media', 'comment', 'my-1');
     const img = document.createElement('img');
@@ -153,7 +153,7 @@ export class LiveComponent implements OnInit {
     this.comments.nativeElement.appendChild(li);
     this.cleanComment();
     this.comments.nativeElement.scrollTop = this.comments.nativeElement.scrollHeight;
-    if (!this.bouyomi) {
+    if (!this.bouyomi || !bouyomi) {
       return;
     }
     this.bouyomiSpeech(comment + ' ' + name);
