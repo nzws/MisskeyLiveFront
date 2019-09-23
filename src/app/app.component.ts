@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {SessionService} from './core/service/session.service';
 import {environment} from '../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
+import {NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,19 @@ import {CookieService} from 'ngx-cookie-service';
 export class AppComponent {
   staticSessionService = SessionService;
   isCollapsed = true;
+  showNavbar = true;
 
   constructor(
     private sessionService: SessionService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) {
+    router.events.subscribe(event => {
+      if (!(event instanceof NavigationStart)) {
+        return;
+      }
+      this.showNavbar = !event.url.startsWith('/live_chat/');
+    });
   }
 
   login() {

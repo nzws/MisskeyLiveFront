@@ -8,12 +8,7 @@
       <p>{{ userData?.description }}</p>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 comments">
-    <ul #comments class="list-unstyled m-0 px-3"></ul>
-    <form (ngSubmit)="sendComment()" *ngIf="isLogin && !isCommentWait" class="mr-0 mr-md-auto">
-      <input [(ngModel)]="comment" class="send" name="comment" placeholder="Enterキーでコメントを送信" type="text" autofocus>
-    </form>
-    <input *ngIf="!isLogin" class="send" disabled placeholder="ログインしていていないためコメントできません" type="text">
-    <input *ngIf="isCommentWait" class="send" disabled placeholder="コメントを送信しました" type="text">
+  <div class="col-sm-12 col-md-3 h-100 comments">
+    <app-comment [userId]="userId"></app-comment>
   </div>
 </div>
