@@ -4,12 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../core/service/session.service';
+import { default as twemoji } from 'twemoji';
 
 export interface Data {
   status: string;
   title?: string;
   description?: string;
   message?: string;
+}
+
+interface MisskeyMeta {
+  emojis: {
+    name: string;
+    url: string;
+  }[];
 }
 
 interface MisskeyNote {
@@ -40,12 +48,16 @@ export class LiveComponent implements OnInit {
   bouyomi = true;
   comment: string;
   isCommentWait = false;
+  emojis: Map<string, string> = new Map();
 
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {}
 
   ngOnInit() {
+    twemoji.size = 'svg';
+    twemoji.ext = '.svg';
     this.isLogin = SessionService.login;
     this.i = SessionService.token;
+    this.initCustomEmoji();
     this.route.params.subscribe(params => {
       if (!params.id) {
         return;
@@ -54,6 +66,14 @@ export class LiveComponent implements OnInit {
       this.playerInit();
       this.fetchOldComments();
       this.wsInit();
+    });
+  }
+
+  initCustomEmoji() {
+    this.httpClient.post<MisskeyMeta>('https://misskey.io/api/meta', {}).subscribe(data => {
+      data.emojis.forEach(emoji => {
+        this.emojis.set(`:${emoji.name}:`, `<img class="emoji" draggable="false" src="${emoji.url}" alt=":${emoji.name}:">`);
+      })
     });
   }
 
@@ -144,11 +164,12 @@ export class LiveComponent implements OnInit {
     bodyEl.classList.add('media-body');
     const nameEl = document.createElement('h6');
     nameEl.classList.add('m-0');
-    nameEl.textContent = name;
+    nameEl.innerHTML = this.replaceEmoji(this.escapeHtml(name));
     bodyEl.appendChild(nameEl);
     const commentEl = document.createElement('p');
-    commentEl.textContent = comment;
+    commentEl.textContent = this.replaceEmoji(this.escapeHtml(comment));
     bodyEl.appendChild(commentEl);
+    twemoji.parse(bodyEl);
     li.appendChild(bodyEl);
     this.comments.nativeElement.appendChild(li);
     this.cleanComment();
@@ -157,6 +178,23 @@ export class LiveComponent implements OnInit {
       return;
     }
     this.bouyomiSpeech(comment + ' ' + name);
+  }
+
+  replaceEmoji(text: string) {
+    this.emojis.forEach((url, id) => {
+      text = text.replace(id, url);
+    });
+    return text;
+  }
+
+  escapeHtml(text: string) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/`/g, '&#x60;');
   }
 
   cleanComment() {
