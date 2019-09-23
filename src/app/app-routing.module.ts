@@ -3,6 +3,18 @@ import {RouterModule, Routes, UrlSegment} from '@angular/router';
 import {AuthGuard} from './core/guard/auth.guard';
 import {UserRedirectGuard} from './core/guard/user-redirect.guard';
 
+export function userMatcher(url) {
+  if (url.length !== 1 || !url[0].path.startsWith('@')) {
+    return null;
+  }
+  return {
+    consumed: url,
+    posParams: {
+      id: new UrlSegment(url[0].path.substring(1), {})
+    }
+  };
+}
+
 const routes: Routes = [
   {
     path: '',
@@ -18,23 +30,13 @@ const routes: Routes = [
     loadChildren: () => import('./core/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    matcher: (url) => {
-      if (url.length !== 1 || !url[0].path.startsWith('@')) {
-        return null;
-      }
-      return {
-        consumed: url,
-        posParams: {
-          id: new UrlSegment(url[0].path.substring(1), {})
-        }
-      };
-    },
+    matcher: userMatcher,
     loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   },
   {
     path: ':id',
     canActivate: [UserRedirectGuard],
-    loadChildren: () => null
+    loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   }
 ];
 
