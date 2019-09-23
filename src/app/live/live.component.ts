@@ -13,16 +13,19 @@ export interface Data {
   message?: string;
 }
 
+interface MisskeyEmoji {
+  name: string;
+  url: string;
+}
+
 interface MisskeyMeta {
-  emojis: {
-    name: string;
-    url: string;
-  }[];
+  emojis: MisskeyEmoji[];
 }
 
 interface MisskeyNote {
   id: string;
   text: string | null;
+  emojis: MisskeyEmoji[];
   user: {
     name: string | null;
     username: string;
@@ -72,9 +75,13 @@ export class LiveComponent implements OnInit {
   initCustomEmoji() {
     this.httpClient.post<MisskeyMeta>('https://misskey.io/api/meta', {}).subscribe(data => {
       data.emojis.forEach(emoji => {
-        this.emojis.set(`:${emoji.name}:`, `<img class="emoji" draggable="false" src="${emoji.url}" alt=":${emoji.name}:">`);
+        this.emojis.set(`:${emoji.name}:`, this.convertEmojiToHtml(emoji));
       })
     });
+  }
+
+  convertEmojiToHtml(emoji: MisskeyEmoji) {
+    return `<img class="emoji" draggable="false" src="${emoji.url}" alt="${emoji.name}">`;
   }
 
   playerInit() {
@@ -149,10 +156,10 @@ export class LiveComponent implements OnInit {
       .replace(`https://live.misskey.io/${this.userId}`, '');
     const userName = note.user.name === null ? note.user.username : note.user.name;
     const userNameView = note.user.host === null ? userName : `${userName}@${note.user.host}`;
-    this.writeComment(note.user.avatarUrl, userNameView, text, bouyomi);
+    this.writeComment(note.user.avatarUrl, userNameView, text, note.emojis, bouyomi);
   }
 
-  writeComment(avatar, name, comment, bouyomi: boolean) {
+  writeComment(avatar, name, comment, emojis: MisskeyEmoji[], bouyomi: boolean) {
     const li = document.createElement('li');
     li.classList.add('media', 'comment', 'my-1');
     const img = document.createElement('img');
@@ -164,10 +171,10 @@ export class LiveComponent implements OnInit {
     bodyEl.classList.add('media-body');
     const nameEl = document.createElement('h6');
     nameEl.classList.add('m-0');
-    nameEl.innerHTML = this.replaceEmoji(this.escapeHtml(name));
+    nameEl.innerHTML = this.replaceEmoji(this.escapeHtml(name), emojis);
     bodyEl.appendChild(nameEl);
     const commentEl = document.createElement('p');
-    commentEl.innerHTML = this.replaceEmoji(this.escapeHtml(comment));
+    commentEl.innerHTML = this.replaceEmoji(this.escapeHtml(comment), emojis);
     bodyEl.appendChild(commentEl);
     twemoji.parse(bodyEl);
     li.appendChild(bodyEl);
@@ -180,7 +187,11 @@ export class LiveComponent implements OnInit {
     this.bouyomiSpeech(comment + ' ' + name);
   }
 
-  replaceEmoji(text: string) {
+  replaceEmoji(text: string, emojis: MisskeyEmoji[]) {
+    emojis.forEach(emoji => {
+      console.log(text);
+      text = text.split(`:${emoji.name}:`).join(this.convertEmojiToHtml(emoji));
+    });
     this.emojis.forEach((url, id) => {
       text = text.split(id).join(url);
     });
