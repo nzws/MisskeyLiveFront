@@ -9,7 +9,6 @@ export interface Data {
   status: string;
   title?: string;
   description?: string;
-  tag?: string;
   message?: string;
 }
 
