@@ -153,7 +153,8 @@ export class LiveComponent implements OnInit {
     const text = note.text
       .replace(`#ML${this.userId}`, '')
       .replace('#MisskeyLive', '')
-      .replace(`https://live.misskey.io/${this.userId}`, '');
+      .replace(`https://live.misskey.io/${this.userId}`, '')
+      .replace(`https://live.misskey.io/@${this.userId}`, '');
     const userName = note.user.name === null ? note.user.username : note.user.name;
     const userNameView = note.user.host === null ? userName : `${userName}@${note.user.host}`;
     this.writeComment(note.user.avatarUrl, userNameView, text, note.emojis, bouyomi);
@@ -227,7 +228,7 @@ export class LiveComponent implements OnInit {
     }, 3000);
     const data = {
       i: this.i,
-      text: `${this.comment} #MisskeyLive #ML${this.userId} \n https://live.misskey.io/${this.userId}`,
+      text: `${this.comment} #MisskeyLive #ML${this.userId} \n https://live.misskey.io/@${this.userId}`,
       visibility: 'public',
       localOnly: false
     };
