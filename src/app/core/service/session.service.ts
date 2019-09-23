@@ -14,12 +14,13 @@ export class SessionService {
   }
 
   refresh() {
-    SessionService.login = this.cookieService.check('live-token');
-    SessionService.token = SessionService.login ? this.cookieService.get('live-token') : null;
+    this.cookieService.delete('live-token');
+    SessionService.login = this.cookieService.check('live_token');
+    SessionService.token = SessionService.login ? this.cookieService.get('live_token') : null;
   }
 
   logout() {
-    this.cookieService.delete('live-token');
+    this.cookieService.delete('live_token');
     this.refresh();
   }
 }

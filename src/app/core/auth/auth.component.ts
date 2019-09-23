@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.httpClient.get(`${environment.api}/api/auth/data`, {withCredentials: true})
       .subscribe((data: any) => {
-        this.cookieService.set('live-token', data.i, 60, '/');
+        this.cookieService.set('live_token', data.i, 60, '/');
         this.sessionService.refresh();
         const redirect = this.cookieService.get('redirect');
         this.cookieService.delete('redirect');
