@@ -30,6 +30,10 @@ const routes: Routes = [
     loadChildren: () => import('./core/auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'live_chat',
+    loadChildren: () => import('./core/component/comment/comment.module').then(m => m.CommentModule)
+  },
+  {
     matcher: userMatcher,
     loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   },
