@@ -1,11 +1,14 @@
 import {inject, TestBed} from '@angular/core/testing';
 
 import {AuthGuard} from './auth.guard';
+import {CookieService} from 'ngx-cookie-service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthGuard]
+      imports: [HttpClientTestingModule],
+      providers: [AuthGuard, CookieService]
     });
   });
 
