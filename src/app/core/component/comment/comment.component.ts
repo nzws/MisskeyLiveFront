@@ -164,7 +164,6 @@ export class CommentComponent implements OnInit {
 
   replaceEmoji(text: string, emojis: MisskeyEmoji[]) {
     emojis.forEach(emoji => {
-      console.log(text);
       text = text.split(`:${emoji.name}:`).join(this.convertEmojiToHtml(emoji));
     });
     this.emojis.forEach((url, id) => {
