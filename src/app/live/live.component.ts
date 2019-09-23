@@ -167,7 +167,7 @@ export class LiveComponent implements OnInit {
     nameEl.innerHTML = this.replaceEmoji(this.escapeHtml(name));
     bodyEl.appendChild(nameEl);
     const commentEl = document.createElement('p');
-    commentEl.textContent = this.replaceEmoji(this.escapeHtml(comment));
+    commentEl.innerHTML = this.replaceEmoji(this.escapeHtml(comment));
     bodyEl.appendChild(commentEl);
     twemoji.parse(bodyEl);
     li.appendChild(bodyEl);
