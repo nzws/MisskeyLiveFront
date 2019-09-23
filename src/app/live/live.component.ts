@@ -182,7 +182,7 @@ export class LiveComponent implements OnInit {
 
   replaceEmoji(text: string) {
     this.emojis.forEach((url, id) => {
-      text = text.replace(id, url);
+      text = text.split(id).join(url);
     });
     return text;
   }
