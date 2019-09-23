@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../core/service/session.service';
+import { default as twemoji } from 'twemoji';
 
 export interface Data {
   status: string;
@@ -44,6 +45,8 @@ export class LiveComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {}
 
   ngOnInit() {
+    twemoji.size = 'svg';
+    twemoji.ext = '.svg';
     this.isLogin = SessionService.login;
     this.i = SessionService.token;
     this.route.params.subscribe(params => {
@@ -149,6 +152,7 @@ export class LiveComponent implements OnInit {
     const commentEl = document.createElement('p');
     commentEl.textContent = comment;
     bodyEl.appendChild(commentEl);
+    twemoji.parse(bodyEl);
     li.appendChild(bodyEl);
     this.comments.nativeElement.appendChild(li);
     this.cleanComment();

@@ -21,3 +21,10 @@
 ::-webkit-scrollbar-track {
   background-color: rgba(138, 138, 138, 0.1);
 }
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
