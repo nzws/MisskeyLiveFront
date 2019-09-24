@@ -1,5 +1,5 @@
 <nav *ngIf="showNavbar" class="navbar navbar-expand-lg navbar-dark bg-grad1">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" routerLink="/">
     <img height="38" src="https://assets.arkjp.net/misskey/live/logo_light.svg"/>
   </a>
   <button
@@ -13,7 +13,7 @@
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" *ngIf="staticSessionService.login">
-        <a class="nav-link" href="/dashboard">ダッシュボード</a>
+        <a class="nav-link" routerLink="/dashboard">ダッシュボード</a>
       </li>
     </ul>
     <div class="my-2 my-lg-0">
