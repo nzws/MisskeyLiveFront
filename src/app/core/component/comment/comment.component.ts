@@ -34,7 +34,7 @@ export class CommentComponent implements OnInit {
 
   @ViewChild('comments', { static: false }) comments: ElementRef;
   @Input() userId: string;
-  staticSessinService = SessionService;
+  staticSessionService = SessionService;
   ws: WebSocket;
   bouyomi = true;
   comment: string;
