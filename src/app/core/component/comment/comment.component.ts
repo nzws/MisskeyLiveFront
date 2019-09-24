@@ -203,7 +203,7 @@ export class CommentComponent implements OnInit {
     const data = {
       i: SessionService.token,
       text: `${this.comment} #MisskeyLive #ML${this.userId} \n https://live.misskey.io/@${this.userId}`,
-      visibility: 'public',
+      visibility: 'home',
       localOnly: false
     };
     this.httpClient.post('https://misskey.io/api/notes/create', data).subscribe();
