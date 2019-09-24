@@ -11,7 +11,11 @@
   </button>
 
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="navbar-nav mr-auto"></div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active" *ngIf="staticSessionService.login">
+        <a class="nav-link" href="/dashboard">ダッシュボード</a>
+      </li>
+    </ul>
     <div class="my-2 my-lg-0">
       <ng-template [ngIf]="!staticSessionService.login">
         <button class="btn btn-outline-success my-2 my-sm-0" (click)="login()">
