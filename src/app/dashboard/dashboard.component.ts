@@ -1,4 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {SessionService} from '../core/service/session.service';
+import {environment} from '../../environments/environment';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
+
+interface UserData {
+  i?: string;
+  server?: string;
+  live_token?: string;
+  title: string;
+  description: string;
+  auto_post: boolean;
+  post_text: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -6,9 +21,44 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor() {
+  @ViewChild('title', {static: false}) title: ElementRef;
+  @ViewChild('desc', {static: false}) desc: ElementRef;
+  @ViewChild('updated', {static: false}) updated: SwalComponent;
+
+  video: SafeResourceUrl;
+  userName: string;
+  userData: UserData;
+
+  constructor(
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer,
+  ) {
   }
 
   ngOnInit() {
+    if (!SessionService.user) {
+      return;
+    }
+    this.userName = SessionService.user.username;
+    this.video = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.api}/embed/${this.userName}`);
+    this.httpClient.get<UserData>(`${environment.api}/api/data/${this.userName}?i=${SessionService.token}`)
+      .subscribe(data => {
+        this.userData = data;
+      });
+  }
+
+  updateData() {
+    const data: UserData = {
+      i: SessionService.token,
+      title: this.title.nativeElement.value,
+      description: this.desc.nativeElement.value,
+      auto_post: this.userData.auto_post,
+      post_text: this.userData.post_text,
+    };
+
+    this.httpClient.post(`${environment.api}/api/user/edit`, data)
+      .subscribe(() => {
+        this.updated.fire();
+      });
   }
 }

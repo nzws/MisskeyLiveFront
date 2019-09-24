@@ -1,6 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DashboardComponent} from './dashboard.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ClipboardModule} from 'ngx-clipboard';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,6 +11,11 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        ClipboardModule,
+        SweetAlert2Module.forRoot(),
+      ],
       declarations: [DashboardComponent]
     }).compileComponents();
   }));
