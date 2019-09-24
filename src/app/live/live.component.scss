@@ -20,6 +20,10 @@
   overflow-y: scroll;
 }
 
+.description {
+  white-space: pre;
+}
+
 @media (max-width: 991px) {
   .live-app, .comments {
     max-height: 50%;
