@@ -24,6 +24,7 @@
     "@sweetalert2/ngx-sweetalert2": "^6.0.1",
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
+    "ngx-clipboard": "^12.2.1",
     "ngx-cookie-service": "^2.2.0",
     "rxjs": "^6.5.3",
     "sweetalert2": "^8.17.6",
