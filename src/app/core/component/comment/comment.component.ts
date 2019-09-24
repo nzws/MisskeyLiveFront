@@ -46,6 +46,10 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     twemoji.size = 'svg';
     twemoji.ext = '.svg';
+    if (this.userId) {
+      this.init();
+      return;
+    }
     this.route.params.subscribe(params => {
       if (!params.id) {
         return;
@@ -53,9 +57,6 @@ export class CommentComponent implements OnInit {
       this.userId = params.id;
       this.init();
     });
-    if (this.userId) {
-      this.init();
-    }
   }
 
   init() {
