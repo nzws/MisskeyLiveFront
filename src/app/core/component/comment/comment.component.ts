@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SessionService} from '../../service/session.service';
 import {default as twemoji} from 'twemoji';
 import {ActivatedRoute} from '@angular/router';
+import {faVolumeMute, faVolumeUp} from '@fortawesome/free-solid-svg-icons';
 
 interface MisskeyEmoji {
   name: string;
@@ -31,12 +32,14 @@ interface MisskeyNote {
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit {
+  faVolumeUp = faVolumeUp;
+  faVolumeMute = faVolumeMute;
 
   @ViewChild('comments', { static: false }) comments: ElementRef;
   @Input() userId: string;
   staticSessionService = SessionService;
   ws: WebSocket;
-  bouyomi = true;
+  bouyomi = false;
   comment: string;
   isCommentWait = false;
   emojis: Map<string, string> = new Map();
@@ -79,8 +82,6 @@ export class CommentComponent implements OnInit {
 
   wsInit() {
     this.ws = new WebSocket('wss://misskey.io/streaming');
-    this.bouyomiSpeech('MisskeyLiveと連携しました');
-
     this.ws.onopen = () => {
       this.ws.send(
         JSON.stringify({
@@ -208,6 +209,11 @@ export class CommentComponent implements OnInit {
     };
     this.httpClient.post('https://misskey.io/api/notes/create', data).subscribe();
     this.comment = '';
+  }
+
+  toggleBouyomi() {
+    this.bouyomi = !this.bouyomi;
+    this.bouyomiSpeech('MisskeyLiveと連携しました');
   }
 
   bouyomiSpeech(text: string) {

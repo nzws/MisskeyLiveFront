@@ -1,4 +1,7 @@
 <div class="comments">
+  <div class="top-overlay">
+    <button class="btn btn-secondary bouyomiSwitch" (click)="toggleBouyomi()" placement="right" ngbTooltip="棒読みちゃん連携の切り替え"><fa-icon [icon]="bouyomi ? faVolumeUp : faVolumeMute"></fa-icon></button>
+  </div>
   <ul #comments class="list-unstyled m-0 px-3"></ul>
   <form (ngSubmit)="sendComment()" *ngIf="staticSessionService.login && !isCommentWait" class="mr-0 mr-md-auto">
     <input [(ngModel)]="comment" class="send" name="comment" placeholder="Enterキーでコメントを送信" type="text" autofocus>

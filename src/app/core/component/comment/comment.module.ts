@@ -5,6 +5,8 @@ import { CommentRoutingModule } from './comment-routing.module';
 import { CommentComponent } from './comment.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [CommentComponent],
@@ -15,7 +17,9 @@ import {HttpClientModule} from '@angular/common/http';
     CommonModule,
     CommentRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule,
+    NgbTooltipModule,
   ]
 })
 export class CommentModule { }
