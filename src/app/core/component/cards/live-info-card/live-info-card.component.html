@@ -1,6 +1,10 @@
 <a [routerLink]="url">
   <div class="card">
-    <img [src]="thumbnail" alt="image" class="card-img-top"/>
+    <img [src]="thumbnail"
+         alt="image"
+         class="card-img-top"
+         onerror="this.src = 'https://s3.arkjp.net/live/thumb-404.jpg'"
+    />
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
       <p class="text-white">@{{username}}</p>
