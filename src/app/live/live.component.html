@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-xl-9 col-lg-8 live-app">
     <div class="embed-responsive embed-responsive-16by9">
       <ng-template [ngIf]="online">
-        <iframe [src]="video" allowfullscreen></iframe>
+        <iframe [src]="video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </ng-template>
       <ng-template [ngIf]="!online">
         <img class="embed-responsive-item" src="https://s3.arkjp.net/live/offline.jpg" draggable="false" alt="Offline">
