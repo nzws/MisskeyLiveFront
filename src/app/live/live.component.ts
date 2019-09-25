@@ -50,4 +50,8 @@ export class LiveComponent implements OnInit {
       }
     });
   }
+
+  popupChat() {
+    window.open(`/live_chat/${this.userId}`, '', 'width=500,height=600');
+  }
 }

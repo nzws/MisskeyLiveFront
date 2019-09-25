@@ -4,6 +4,8 @@ import { CommentComponent } from './comment.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 describe('CommentComponent', () => {
   let component: CommentComponent;
@@ -11,7 +13,13 @@ describe('CommentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule, HttpClientTestingModule, RouterTestingModule ],
+      imports: [
+        FormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NgbTooltipModule,
+        FontAwesomeModule,
+      ],
       declarations: [ CommentComponent ]
     })
     .compileComponents();

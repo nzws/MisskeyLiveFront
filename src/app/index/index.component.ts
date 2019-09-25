@@ -1,4 +1,12 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+
+interface LiveInfo {
+  username: string;
+  created: string;
+  title: string;
+}
 
 @Component({
   selector: 'app-index',
@@ -6,9 +14,18 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  constructor() {
+  liveInfo: LiveInfo[];
+  apiUrl = environment.api;
+
+  constructor(
+    private httpClient: HttpClient
+  ) {
   }
 
   ngOnInit() {
+    this.httpClient.get<LiveInfo[]>(`${this.apiUrl}/api/streams/list`)
+      .subscribe(data => {
+        this.liveInfo = data;
+      })
   }
 }

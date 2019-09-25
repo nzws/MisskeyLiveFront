@@ -9,6 +9,7 @@ export class LiveInfoCardComponent implements OnInit {
   @Input() title: string;
   @Input() url: string;
   @Input() thumbnail: string;
+  @Input() username: string;
 
   constructor() {
   }

@@ -1,6 +1,14 @@
 <div class="container min-vh-100 d-flex justify-content-center">
-  <div class="text-center align-self-center">
-    <h4>(この辺の実装は)</h4>
-    <img alt="しばしまたれよ" src="https://assets.arkjp.net/misskey/live/matareyo.svg" width="100%">
+  <div class="container">
+    <h1>現在配信中</h1>
+    <div class="card-columns">
+      <ng-template ngFor let-data [ngForOf]="liveInfo">
+        <app-live-info-card
+          [title]="data.title"
+          [url]="'/@' + data.username"
+          [username]="data.username"
+          [thumbnail]="apiUrl + '/api/streams/thumbnail/' + data.username"></app-live-info-card>
+      </ng-template>
+    </div>
   </div>
 </div>
