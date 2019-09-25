@@ -29,3 +29,11 @@
     max-height: 50%;
   }
 }
+
+.popup-button {
+  position: absolute;
+  z-index: 9;
+  right: 15px;
+  top: 0;
+  cursor: pointer;
+}
