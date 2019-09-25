@@ -16,6 +16,7 @@ interface LiveInfo {
 export class IndexComponent implements OnInit {
   liveInfo: LiveInfo[];
   apiUrl = environment.api;
+  cacheVersion: number;
 
   constructor(
     private httpClient: HttpClient
@@ -23,6 +24,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cacheVersion = Math.floor(new Date().getTime() / 60000);
     this.httpClient.get<LiveInfo[]>(`${this.apiUrl}/api/streams/list`)
       .subscribe(data => {
         this.liveInfo = data;
