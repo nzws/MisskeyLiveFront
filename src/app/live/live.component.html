@@ -1,7 +1,12 @@
 <div class="row no-gutters live">
   <div class="col-sm-12 col-xl-9 col-lg-8 live-app">
     <div class="embed-responsive embed-responsive-16by9">
-      <iframe [src]="video" allowfullscreen></iframe>
+      <ng-template [ngIf]="online">
+        <iframe [src]="video" allowfullscreen></iframe>
+      </ng-template>
+      <ng-template [ngIf]="!online">
+        <img class="embed-responsive-item" src="https://s3.arkjp.net/live/offline.jpg" draggable="false" alt="Offline">
+      </ng-template>
     </div>
     <div class="container-fluid mt-1">
       <h4>{{ userData?.title }}</h4>

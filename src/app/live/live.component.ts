@@ -9,6 +9,7 @@ export interface Data {
   title?: string;
   description?: string;
   message?: string;
+  server?: string;
 }
 
 @Component({
@@ -20,6 +21,7 @@ export class LiveComponent implements OnInit {
   video: SafeResourceUrl;
   userId = '404';
   userData: Data;
+  online: boolean;
 
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {}
 
@@ -41,6 +43,8 @@ export class LiveComponent implements OnInit {
     this.httpClient.get<Data>(`${environment.api}/api/data/${this.userId}`).subscribe(data => {
       if (data.status === 'OK') {
         this.userData = data;
+        this.liveCheck();
+        setInterval(() => this.liveCheck(), 5000);
       } else {
         this.userData = {
           status: data.status,
@@ -49,6 +53,11 @@ export class LiveComponent implements OnInit {
         };
       }
     });
+  }
+
+  liveCheck() {
+    this.httpClient.get(`https://hls-${this.userData.server}.arkjp.net/${this.userId}/index.m3u8`, {responseType: 'text'})
+      .subscribe(() => this.online = true, () => this.online = false);
   }
 
   popupChat() {
