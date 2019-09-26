@@ -106,7 +106,9 @@ export class CommentComponent implements OnInit {
       this.addComment(JSON.parse(msg.data).body.body as MisskeyNote, true);
     };
     this.ws.onerror = () => {
-      this.ws.close();
+      setTimeout(() => {
+        this.wsInit();
+      }, 2000);
     };
   }
 
