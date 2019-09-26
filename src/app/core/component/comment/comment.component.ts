@@ -100,13 +100,15 @@ export class CommentComponent implements OnInit {
     this.ws.onclose = () => {
       setTimeout(() => {
         this.wsInit();
-      }, 10000);
+      }, 2000);
     };
     this.ws.onmessage = msg => {
       this.addComment(JSON.parse(msg.data).body.body as MisskeyNote, true);
     };
     this.ws.onerror = () => {
-      this.ws.close();
+      setTimeout(() => {
+        this.wsInit();
+      }, 2000);
     };
   }
 
