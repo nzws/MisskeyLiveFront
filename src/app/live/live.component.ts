@@ -23,6 +23,7 @@ export class LiveComponent implements OnInit {
   userData: Data;
   online: boolean;
   fail = false;
+  failCount = 0;
 
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {
   }
@@ -69,8 +70,12 @@ export class LiveComponent implements OnInit {
           }, 8000)
         }
       }, () => {
-        this.online = false;
-        this.fail = true;
+        this.failCount++;
+        if (this.failCount > 5) {
+          this.online = false;
+          this.fail = true;
+          this.failCount = 0;
+        }
       });
   }
 
