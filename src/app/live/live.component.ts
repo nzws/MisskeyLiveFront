@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 export interface Data {
   status: string;
@@ -22,8 +22,10 @@ export class LiveComponent implements OnInit {
   userId = '404';
   userData: Data;
   online: boolean;
+  fail = false;
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {}
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -57,7 +59,19 @@ export class LiveComponent implements OnInit {
 
   liveCheck() {
     this.httpClient.get(`https://hls-${this.userData.server}.arkjp.net/${this.userId}/index.m3u8`, {responseType: 'text'})
-      .subscribe(() => this.online = true, () => this.online = false);
+      .subscribe(() => {
+        if (this.fail === false) {
+          this.online = true;
+        } else {
+          setTimeout(() => {
+            this.online = true;
+            this.fail = false;
+          }, 8000)
+        }
+      }, () => {
+        this.online = false;
+        this.fail = true;
+      });
   }
 
   popupChat() {
