@@ -36,6 +36,7 @@ export class CommentComponent implements OnInit {
   faVolumeMute = faVolumeMute;
 
   @ViewChild('comments', { static: false }) comments: ElementRef;
+  @ViewChild('input', {static: false}) input: ElementRef;
   @Input() userId: string;
   staticSessionService = SessionService;
   ws: WebSocket;
@@ -201,6 +202,9 @@ export class CommentComponent implements OnInit {
     this.isCommentWait = true;
     setTimeout(() => {
       this.isCommentWait = false;
+      setTimeout(() => {
+        this.input.nativeElement.focus();
+      }, 300)
     }, 3000);
     const data = {
       i: SessionService.token,
