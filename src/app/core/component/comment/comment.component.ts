@@ -36,6 +36,7 @@ export class CommentComponent implements OnInit {
   faVolumeMute = faVolumeMute;
 
   @ViewChild('comments', { static: false }) comments: ElementRef;
+  @ViewChild('input', {static: false}) input: ElementRef;
   @Input() userId: string;
   staticSessionService = SessionService;
   ws: WebSocket;
@@ -141,11 +142,10 @@ export class CommentComponent implements OnInit {
   writeComment(avatar, name, comment, emojis: MisskeyEmoji[], bouyomi: boolean) {
     const li = document.createElement('li');
     li.classList.add('media', 'comment', 'my-1');
-    const img = document.createElement('img');
-    img.classList.add('mr-3', 'rounded-circle');
-    img.src = avatar;
-    img.width = 48;
-    li.appendChild(img);
+    const span = document.createElement('span');
+    span.classList.add('mr-3', 'rounded-circle', 'comment-avatar');
+    span.style.backgroundImage = `url( ${avatar} )`;
+    li.appendChild(span);
     const bodyEl = document.createElement('div');
     bodyEl.classList.add('media-body');
     const nameEl = document.createElement('h6');
@@ -202,6 +202,9 @@ export class CommentComponent implements OnInit {
     this.isCommentWait = true;
     setTimeout(() => {
       this.isCommentWait = false;
+      setTimeout(() => {
+        this.input.nativeElement.focus();
+      }, 300)
     }, 3000);
     const data = {
       i: SessionService.token,

@@ -36,4 +36,11 @@ img.emoji {
       width: 2em;
     }
   }
+
+  .comment-avatar {
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    background-position: center;
+  }
 }
