@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../environments/environment';
@@ -25,7 +25,7 @@ interface ArchiveList {
   templateUrl: './live.component.html',
   styleUrls: ['./live.component.scss']
 })
-export class LiveComponent implements OnInit {
+export class LiveComponent implements OnInit, OnDestroy {
   video: SafeResourceUrl;
   userId = '404';
   userData: Data;
@@ -33,6 +33,7 @@ export class LiveComponent implements OnInit {
   fail = false;
   failCount = 0;
   archiveData: ArchiveList[] = [];
+  checkIntervalId: number;
 
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {
   }
@@ -51,6 +52,12 @@ export class LiveComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.checkIntervalId !== undefined) {
+      clearInterval(this.checkIntervalId);
+    }
+  }
+
   playerInit() {
     // load player
     this.video = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.api}/embed/${this.userId}`);
@@ -60,7 +67,7 @@ export class LiveComponent implements OnInit {
       if (data.status === 'OK') {
         this.userData = data;
         this.liveCheck();
-        setInterval(() => this.liveCheck(), 5000);
+        this.checkIntervalId = setInterval(() => this.liveCheck(), 5000);
       } else {
         this.userData = {
           status: data.status,
