@@ -67,7 +67,7 @@ export class LiveComponent implements OnInit, OnDestroy {
       if (data.status === 'OK') {
         this.userData = data;
         this.liveCheck();
-        this.checkIntervalId = setInterval(() => this.liveCheck(), 5000);
+        this.checkIntervalId = window.setInterval(() => this.liveCheck(), 5000);
       } else {
         this.userData = {
           status: data.status,
