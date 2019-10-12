@@ -5,6 +5,14 @@ import {environment} from '../../environments/environment';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 
+interface ArchiveList {
+  id: string;
+  title: string;
+  timestamp: string;
+  thumbnail: string;
+  duration: number;
+}
+
 interface UserData {
   i?: string;
   server?: string;
@@ -28,6 +36,7 @@ export class DashboardComponent implements OnInit {
   video: SafeResourceUrl;
   userName: string;
   userData: UserData;
+  archiveData: ArchiveList[] = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -45,6 +54,10 @@ export class DashboardComponent implements OnInit {
       .subscribe(data => {
         this.userData = data;
       });
+    this.httpClient.get<ArchiveList[]>(`${environment.api}/api/archives/list/${this.userName}?i=${SessionService.token}`)
+      .subscribe(data => {
+        this.archiveData = data;
+      });
   }
 
   updateData() {
@@ -60,5 +73,14 @@ export class DashboardComponent implements OnInit {
       .subscribe(() => {
         this.updated.fire();
       });
+  }
+
+  updatePublicStatus(id: string, status: boolean) {
+    const data = {
+      i: SessionService.token,
+      id,
+      public: status
+    };
+    this.httpClient.post(`${environment.api}/api/archives/edit`, data).subscribe();
   }
 }

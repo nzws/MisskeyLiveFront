@@ -1,0 +1,23 @@
+.archives {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.btn-public {
+  padding: 5px;
+  border: 0 !important;
+}
+
+.public-label, .btn-public {
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+
+  &.public {
+    background-color: #4CAF50 !important;
+  }
+
+  &.private {
+    background-color: #C62828 !important;
+  }
+}

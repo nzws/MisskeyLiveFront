@@ -19,7 +19,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(138, 138, 138, 0.1);
+  background-color: rgb(55, 55, 55);
 }
 
 img.emoji {
@@ -43,4 +43,27 @@ img.emoji {
     background-size: cover;
     background-position: center;
   }
+}
+
+.btn {
+  border-radius: 0 !important;
+  transition: all 0.25s;
+}
+
+.card-header, .card {
+  border-radius: 0 !important;
+
+  &.bg-dark {
+    background-color: #282a31 !important;
+  }
+}
+
+textarea, input {
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  color: #dadada !important;
+}
+
+.pointer {
+  cursor: pointer;
 }

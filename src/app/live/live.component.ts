@@ -12,6 +12,14 @@ export interface Data {
   server?: string;
 }
 
+interface ArchiveList {
+  id: string;
+  title: string;
+  timestamp: string;
+  thumbnail: string;
+  duration: number;
+}
+
 @Component({
   selector: 'app-live',
   templateUrl: './live.component.html',
@@ -24,6 +32,7 @@ export class LiveComponent implements OnInit {
   online: boolean;
   fail = false;
   failCount = 0;
+  archiveData: ArchiveList[] = [];
 
   constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private httpClient: HttpClient) {
   }
@@ -35,6 +44,10 @@ export class LiveComponent implements OnInit {
       }
       this.userId = params.id;
       this.playerInit();
+      this.httpClient.get<ArchiveList[]>(`${environment.api}/api/archives/list/${this.userId}`)
+        .subscribe(data => {
+          this.archiveData = data;
+        });
     });
   }
 
@@ -67,7 +80,7 @@ export class LiveComponent implements OnInit {
           setTimeout(() => {
             this.online = true;
             this.fail = false;
-          }, 8000)
+          }, 8000);
         }
       }, () => {
         this.failCount++;
