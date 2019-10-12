@@ -41,7 +41,9 @@ export class VideoComponent implements OnInit {
 
   playerInit() {
     // load player
-    this.video = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.api}/embed/archive/${this.videoId}?i=${SessionService.token}`);
+    this.video = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `${environment.api}/embed/archive/${this.videoId}?i=${SessionService.token}`
+    );
 
     // load video data
     this.httpClient.get<VideoData>(`${environment.api}/api/archives/${this.videoId}?i=${SessionService.token}`)
