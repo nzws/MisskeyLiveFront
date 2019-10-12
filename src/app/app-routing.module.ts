@@ -38,6 +38,11 @@ const routes: Routes = [
     loadChildren: () => import('./live/live.module').then(m => m.LiveModule)
   },
   {
+    path: 'v',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./video/video.module').then(m => m.VideoModule)
+  },
+  {
     path: ':id',
     canActivate: [UserRedirectGuard],
     loadChildren: () => import('./live/live.module').then(m => m.LiveModule)

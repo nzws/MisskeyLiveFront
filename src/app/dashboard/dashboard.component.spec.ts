@@ -4,6 +4,7 @@ import {DashboardComponent} from './dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ClipboardModule} from 'ngx-clipboard';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -12,6 +13,7 @@ describe('DashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         HttpClientModule,
         ClipboardModule,
         SweetAlert2Module.forRoot(),

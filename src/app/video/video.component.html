@@ -1,0 +1,13 @@
+<div class="container my-3">
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe [src]="video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+  <div class="mt-1">
+    <h4>{{ videoData?.title }}</h4>
+    <ng-template [ngIf]="videoData?.user">
+      <p class="m-0">{{videoData?.timestamp | date: 'yyyy年MM月dd日 HH:mm' : '+1800'}} にライブ配信</p>
+      <h5><a href="https://misskey.io/@{{ videoData?.user }}" target="_blank" rel="noopener">@{{ videoData?.user }}</a></h5>
+    </ng-template>
+    <p class="description">{{ videoData?.description }}</p>
+  </div>
+</div>
