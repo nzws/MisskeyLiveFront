@@ -12,6 +12,30 @@
       <h4>{{ userData?.title }}</h4>
       <p class="description">{{ userData?.description }}</p>
     </div>
+    <div class="container-fluid my-3" *ngIf="archiveData.length != 0">
+      <h4>{{userId}} の過去の配信</h4>
+      <div class="card-columns">
+        <ng-template ngFor let-data [ngForOf]="archiveData">
+          <a [routerLink]="'/v/' + data.id">
+            <div class="card">
+              <div class="embed-responsive embed-responsive-16by9">
+                <img [src]="data.thumbnail"
+                     alt="image"
+                     class="card-img-top embed-responsive-item"
+                     onerror="this.src = 'https://s3.arkjp.net/live/thumb-404.jpg'"
+                     draggable="false"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ data.title }}</h5>
+                <p class="text-white m-0">{{data.duration * 1000 | date: 'HH:mm:ss' : 'UTC'}}</p>
+                <p class="text-white m-0">{{data.timestamp | date: 'yyyy年MM月dd日 HH:mm' : '+1800'}}</p>
+              </div>
+            </div>
+          </a>
+        </ng-template>
+      </div>
+    </div>
   </div>
   <div class="col-sm-12 col-xl-3 col-lg-4 h-100 comments">
     <div class="btn btn-secondary popup-button" (click)="popupChat()">

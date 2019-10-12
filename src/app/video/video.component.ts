@@ -12,6 +12,14 @@ export interface VideoData {
   timestamp: string;
 }
 
+interface ArchiveList {
+  id: string;
+  title: string;
+  timestamp: string;
+  thumbnail: string;
+  duration: number;
+}
+
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
@@ -21,6 +29,7 @@ export class VideoComponent implements OnInit {
   video: SafeResourceUrl;
   videoId = '404';
   videoData: VideoData;
+  archiveData: ArchiveList[] = [];
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -50,6 +59,10 @@ export class VideoComponent implements OnInit {
       .subscribe(
         data => {
           this.videoData = data;
+          this.httpClient.get<ArchiveList[]>(`${environment.api}/api/archives/list/${data.user}`)
+            .subscribe(list => {
+              this.archiveData = list;
+            });
         },
         () => {
           this.videoData = {
